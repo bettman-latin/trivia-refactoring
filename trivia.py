@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-
+#test
 class Game:
     def __init__(self):
         self.players = []
@@ -82,16 +82,14 @@ class Game:
 
     @property
     def _current_category(self):
-        if self.places[self.current_player] == 0: return 'Pop'
-        if self.places[self.current_player] == 4: return 'Pop'
-        if self.places[self.current_player] == 8: return 'Pop'
-        if self.places[self.current_player] == 1: return 'Science'
-        if self.places[self.current_player] == 5: return 'Science'
-        if self.places[self.current_player] == 9: return 'Science'
-        if self.places[self.current_player] == 2: return 'Sports'
-        if self.places[self.current_player] == 6: return 'Sports'
-        if self.places[self.current_player] == 10: return 'Sports'
-        return 'Rock'
+        if self.places[self.current_player] % 4 == 0: 
+            return 'Pop'
+        elif self.places[self.current_player] % 4 == 1:
+            return 'Science'
+        elif self.places[self.current_player] % 4 == 2: 
+            return 'Sports'
+        else:
+            return 'Rock'
 
     def was_correctly_answered(self):
         if self.in_penalty_box[self.current_player]:
