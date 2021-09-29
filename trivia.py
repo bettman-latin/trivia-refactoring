@@ -50,15 +50,15 @@ class Game:
                 self.is_getting_out_of_penalty_box = True
 
                 print("%s is getting out of the penalty box" % self.players[self.current_player])
-                self.newmethod962(roll)
+                self.continue_roll(roll)
             else:
                 print("%s is not getting out of the penalty box" % self.players[self.current_player])
                 self.is_getting_out_of_penalty_box = False
         else:
-            self.newmethod962(roll)
+            self.continue_roll(roll)
 
 
-    def newmethod962(self, roll):
+    def continue_roll(self, roll):
         self.places[self.current_player] = self.places[self.current_player] + roll
         if self.places[self.current_player] > 11:
             self.places[self.current_player] = self.places[self.current_player] - 12
