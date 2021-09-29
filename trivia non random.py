@@ -165,7 +165,7 @@ if __name__ == '__main__':
             not_a_winner = game.wrong_answer()
         else:
             not_a_winner = game.was_correctly_answered()
-
+            
         win_num = (win_num +1) % 9
 
         if not not_a_winner: break

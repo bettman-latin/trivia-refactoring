@@ -19,10 +19,9 @@ class Game:
             self.pop_questions.append("Pop Question %s" % i)
             self.science_questions.append("Science Question %s" % i)
             self.sports_questions.append("Sports Question %s" % i)
-            self.rock_questions.append(self.create_rock_question(i))
+            self.rock_questions.append("Rock Question %s" % i)
 
-    def create_rock_question(self, index):
-        return "Rock Question %s" % index
+#removed create_rock question function
 
     def is_playable(self):
         return self.how_many_players >= 2
@@ -46,33 +45,29 @@ class Game:
         print("%s is the current player" % self.players[self.current_player])
         print("They have rolled a %s" % roll)
 
-        if self.in_penalty_box[self.current_player]:
+        if self.in_penalty_box[self.current_player]: #if player is in penalty box
             if roll % 2 != 0:
                 self.is_getting_out_of_penalty_box = True
 
                 print("%s is getting out of the penalty box" % self.players[self.current_player])
-                self.places[self.current_player] = self.places[self.current_player] + roll
-                if self.places[self.current_player] > 11:
-                    self.places[self.current_player] = self.places[self.current_player] - 12
-
-                print(self.players[self.current_player] + \
-                            '\'s new location is ' + \
-                            str(self.places[self.current_player]))
-                print("The category is %s" % self._current_category)
-                self._ask_question()
+                self.newmethod962(roll)
             else:
                 print("%s is not getting out of the penalty box" % self.players[self.current_player])
                 self.is_getting_out_of_penalty_box = False
         else:
-            self.places[self.current_player] = self.places[self.current_player] + roll
-            if self.places[self.current_player] > 11:
-                self.places[self.current_player] = self.places[self.current_player] - 12
+            self.newmethod962(roll)
 
-            print(self.players[self.current_player] + \
-                        '\'s new location is ' + \
-                        str(self.places[self.current_player]))
-            print("The category is %s" % self._current_category)
-            self._ask_question()
+
+    def newmethod962(self, roll):
+        self.places[self.current_player] = self.places[self.current_player] + roll
+        if self.places[self.current_player] > 11:
+            self.places[self.current_player] = self.places[self.current_player] - 12
+
+        print(self.players[self.current_player] + \
+                    '\'s new location is ' + \
+                    str(self.places[self.current_player]))
+        print("The category is %s" % self._current_category)
+        self._ask_question()
 
     def _ask_question(self):
         if self._current_category == 'Pop': print(self.pop_questions.pop(0))
@@ -124,7 +119,8 @@ class Game:
 
             winner = self._did_player_win()
             self.current_player += 1
-            if self.current_player == len(self.players): self.current_player = 0
+            #if current player is last player, go back to first player
+            if self.current_player == len(self.players): self.current_player = 0 
 
             return winner
 
