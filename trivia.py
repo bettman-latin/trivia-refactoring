@@ -11,25 +11,49 @@ class Player:
         self.purses = 0
         self.in_penalty_box = 0
 
-
-class Game:
+class Questions:
     def __init__(self):
-
-        self.players = []        
-
+        
         self.pop_questions = []
         self.science_questions = []
         self.sports_questions = []
         self.rock_questions = []
-
-        self.current_player = 0
-        self.is_getting_out_of_penalty_box = False
 
         for i in range(50):
             self.pop_questions.append("Pop Question %s" % i)
             self.science_questions.append("Science Question %s" % i)
             self.sports_questions.append("Sports Question %s" % i)
             self.rock_questions.append("Rock Question %s" % i)
+            
+    def _current_category(self, current):
+        if current.places % 4 == 0: 
+            return 'Pop'
+        elif current.places % 4 == 1:
+            return 'Science'
+        elif current.places % 4 == 2: 
+            return 'Sports'
+        else:
+            return 'Rock'
+
+    def _ask_question(self, current):
+        if self._current_category(current) == 'Pop': print(self.pop_questions.pop(0))
+        if self._current_category(current) == 'Science': print(self.science_questions.pop(0))
+        if self._current_category(current) == 'Sports': print(self.sports_questions.pop(0))
+        if self._current_category(current) == 'Rock': print(self.rock_questions.pop(0))
+
+#link Player Class to game class
+#current-category is messed up
+
+class Game:
+    def __init__(self):
+
+        self.players = []
+        self.questions = Questions()
+
+        # self.current_questions = 0
+        self.current_player = 0
+        self.is_getting_out_of_penalty_box = False
+
 
 #removed create_rock question function
 
@@ -44,6 +68,11 @@ class Game:
         print("They are player number %s" % len(self.players))
 
         return True
+
+    # def addQ(self, question):
+    #     newQuestion = Questions(question)
+    #     self.questions.append(newQuestion)
+
 
     @property
     def how_many_players(self):
@@ -76,26 +105,8 @@ class Game:
         print(current.name + \
                     '\'s new location is ' + \
                     str(current.places))
-        print("The category is %s" % self._current_category)
-        self._ask_question()
-
-    def _ask_question(self):
-        if self._current_category == 'Pop': print(self.pop_questions.pop(0))
-        if self._current_category == 'Science': print(self.science_questions.pop(0))
-        if self._current_category == 'Sports': print(self.sports_questions.pop(0))
-        if self._current_category == 'Rock': print(self.rock_questions.pop(0))
-
-    @property
-    def _current_category(self):
-        current = self.players[self.current_player]
-        if current.places % 4 == 0: 
-            return 'Pop'
-        elif current.places % 4 == 1:
-            return 'Science'
-        elif current.places % 4 == 2: 
-            return 'Sports'
-        else:
-            return 'Rock'
+        print("The category is %s" % self.questions._current_category(current))
+        self.questions._ask_question(current)
 
     def was_correctly_answered(self):
         if self.players[self.current_player].in_penalty_box:
