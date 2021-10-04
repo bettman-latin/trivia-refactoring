@@ -102,8 +102,7 @@ class Game:
             if self.is_getting_out_of_penalty_box:
                 self.answer_was_correct_()
             else:
-                self.current_player += 1
-                if self.current_player == len(self.players): self.current_player = 0
+                self.advace_current_player()
                 return True
         else:
             self.answer_was_correct_()
@@ -118,8 +117,7 @@ class Game:
             ' Gold Coins.')
 
         winner = self._did_player_win()
-        self.current_player += 1
-        if self.current_player == len(self.players): self.current_player = 0
+        self.advace_current_player()
 
         return winner
 
@@ -128,16 +126,17 @@ class Game:
         print('Question was incorrectly answered')
         print(current.name + " was sent to the penalty box")
         current.in_penalty_box = True
-
-        self.current_player += 1
-        if self.current_player == len(self.players): self.current_player = 0
+        
+        self.advace_current_player()
         return True
 
     def _did_player_win(self):
         return not (self.players[self.current_player].purses == 6)
 
 
-
+    def advace_current_player(self):
+        self.current_player += 1
+        if self.current_player == len(self.players): self.current_player = 0
 
 from random import randrange
 
