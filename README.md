@@ -17,3 +17,5 @@ the question class had lists of questions, and all functions that created and ch
 the game class had a list of plater objects, some instance variables, and all the other functions to run the game including: roll, add player, asking questions, checking to see if player has won... just all the functios that will br run throughout the game
 
 after classes were created and variables/calls were correctly linked, a few comments were added to give general info on what things do, and specific info on functions/lines that needed clarification 
+
+created a test file that removes randomness from trivia
