@@ -24,8 +24,9 @@ class Questions: #creates Question Class
             self.science_questions.append("Science Question %s" % i)
             self.sports_questions.append("Sports Question %s" % i)
             self.rock_questions.append("Rock Question %s" % i)
-            
-    def _current_category(self, current):
+
+    #determines which list to get question from
+    def _current_category(self, current): 
         if current.places % 4 == 0: 
             return 'Pop'
         elif current.places % 4 == 1:
@@ -34,6 +35,7 @@ class Questions: #creates Question Class
             return 'Sports'
         else:
             return 'Rock'
+
 
     def _ask_question(self, current): #gets questions from list based on _current_category
         if self._current_category(current) == 'Pop': print(self.pop_questions.pop(0))
@@ -46,7 +48,7 @@ class Questions: #creates Question Class
 class Game: #creates Game Class
     def __init__(self):
 
-        self.players = []
+        self.players = [] #list of player objects
         self.questions = Questions()
 
         self.current_player = 0
@@ -54,7 +56,8 @@ class Game: #creates Game Class
 
 
     def is_playable(self):
-        return self.how_many_players >= 2
+        return self.how_many_players >= 2 #min number of players
+
 
     def add(self, player_name): #adds a Player object to players list
         newPlayer = Player(player_name)
@@ -65,8 +68,10 @@ class Game: #creates Game Class
 
         return True
 
-    def how_many_players(self):
+
+    def how_many_players(self):#returns num of players in list
         return len(self.players)
+
 
     def roll(self, roll):
         print("%s is the current player" % self.current_player)
@@ -85,7 +90,7 @@ class Game: #creates Game Class
             self.continue_roll(roll)
 
 
-    def continue_roll(self, roll): #method to reduce duplication
+    def continue_roll(self, roll): #method to reduce duplication, asks quesitons
         current = self.players[self.current_player]
 
         current.places = current.places + roll
@@ -98,6 +103,7 @@ class Game: #creates Game Class
         print("The category is %s" % self.questions._current_category(current))
         self.questions._ask_question(current)
 
+
     def was_correctly_answered(self):
         if self.players[self.current_player].in_penalty_box:
             if self.is_getting_out_of_penalty_box:
@@ -107,6 +113,7 @@ class Game: #creates Game Class
                 return True
         else:
             return self.answer_was_correct_()
+
 
     def answer_was_correct_(self): #method to reduce duplication
         current = self.players[self.current_player]
@@ -122,7 +129,8 @@ class Game: #creates Game Class
 
         return winner
 
-    def wrong_answer(self):
+
+    def wrong_answer(self): #does not give player coin, goes to next player
         current = self.players[self.current_player]
         print('Question was incorrectly answered')
         print(current.name + " was sent to the penalty box")
@@ -131,6 +139,7 @@ class Game: #creates Game Class
         self.advace_current_player()
         return True
 
+
     def _did_player_win(self):
         return not (self.players[self.current_player].purses == 6) 
         #return true if player does not have 6 coins
@@ -138,8 +147,9 @@ class Game: #creates Game Class
 
 
     def advace_current_player(self):
-        self.current_player += 1
+        self.current_player += 1 #current player + 1
         if self.current_player == len(self.players): self.current_player = 0
+        #if on last player, go to first
 
 from random import randrange
 
@@ -147,11 +157,11 @@ if __name__ == '__main__':
     not_a_winner = False
 
     game = Game()
-    game.add('Chet')
+    game.add('Chet') #creates a player with name ______
     game.add('Pat')
     game.add('Sue')
     
-    while True:
+    while True: #loop until: if not not_a_winner: break
         game.roll(randrange(5) + 1)
 
         if randrange(9) == 7:
@@ -161,13 +171,3 @@ if __name__ == '__main__':
             #if not_a_winner = false, then game ends
         if not not_a_winner: break 
 
-
-#player object (name, purse, penalty)
-#game (list of players from player class, roll,  )
-
-
-#work on more refactoring
-#duplication
-#if 2 lines or more, and if they appear more than once
-
-#take game class, and slit into game and question
